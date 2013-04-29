@@ -15,21 +15,17 @@ public class Card
    public enum State { deleted, active };
    public static char[] VALID_VALUES = {'2','3','4','5','6','7','8','9',
       'T','J','Q','K','A','X'};
+   
+   private static char valueRanks[]; // size 14  (13 + Joker, worst case)
+   private static Suit suitRanks[];  // size 4
+   private static int numValsInOrderingArray = 13; // up to 1 to 14 legal values
 
    private char value;
    private Suit suit;
    private State state;
    private boolean errorFlag;
 
-   /**
-    * Default constructor
-    */
-   public Card()
-   {      
-      errorFlag = false;
-      this.value = 'A';
-      this.suit = Suit.spades;
-   }
+
    
    /**
     * Primary constructor for the Card class. 
@@ -41,6 +37,14 @@ public class Card
       set(value, suit);
    }
 
+   /**
+    * Default constructor gives Ace of Spades
+    */
+   public Card()
+   {
+      this('A', Suit.spades);
+   }
+   
    /**
     * Sets a value for a card. If values are invalid, does not change values. 
     * 

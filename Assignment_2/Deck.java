@@ -85,9 +85,10 @@ public class Deck {
    public Card dealCard()
    {
       Card card;
-      if(topCard > 0)
+      if(topCard >= 0)
       {
          card = cards[topCard];
+         topCard--;
       }
       else
       {
@@ -107,8 +108,10 @@ public class Deck {
       
       for (int i = 0; i < cards.length; i++)
       {
+         
          if (cards[i].equals(card))
          {
+            System.out.println(cards[i]);   
             shift++; //if the card exists, use shift.
          }
          
@@ -143,7 +146,7 @@ public class Deck {
          return true;
       }
       else{ return false; }
-   }
+   }  
    
    /**
     * Accesor method for the number of cards, which is the same

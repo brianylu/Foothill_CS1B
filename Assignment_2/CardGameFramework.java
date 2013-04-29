@@ -71,7 +71,7 @@ public class CardGameFramework {
     */
    public Hand getHand (int k)
    {  
-      return null;
+      return hand[k];
    }
    
    /**
@@ -100,6 +100,12 @@ public class CardGameFramework {
    {
       //Stock new deck
       deck = new Deck(numPacks);
+      
+      //remove unwanted cards
+      for (int i = 0; i < numUnusedCardsPerPack; i++)
+      {
+         deck.removeCard(unusedCardsPerPack[i]);
+      }
       
       //Add Jokers
       for (int i = 0; i < numJokersPerPack*numPacks; i++) 
@@ -131,9 +137,16 @@ public class CardGameFramework {
       }
       else
       {
+         hand = new Hand[numPlayers];
+         
+         for (int j = 0; j < numPlayers; j++)
+         {
+            hand[j] = new Hand();
+         }
+         
          for (int i = 0; i < numCardsPerHand; i++)
          {
-            for (int j = 0; j < hand.length; j++)
+            for (int j = 0; j < numPlayers; j++)
             {
                hand[j].takeCard(getCardFromDeck());
             }
@@ -162,6 +175,6 @@ int getNumCardsRemainingInDeck() - sef-explanatory
 void newGame() -  restocks deck according to all private data and shuffles.  This will reset the hands, initialize the deck, remove and add any jokers or unused cards and shuffle the deck.
 boolean deal() - returns false if not enough cards, but deals what it can even so, true, otherwise.  In a loop, it takes a card off the deck (dealCard()) and puts it into a hand until every hand has correct # cards.  The usual convention is to deal each player one card and repeat, not to deal one player his cards, and move to next player.
 Note:  we don't need individual mutators for value and suit since it would not be needed for this particular class.
-    */
+    */   
 
 }
