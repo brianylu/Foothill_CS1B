@@ -17,27 +17,42 @@ class Automaton
    public Automaton(int new_rule)
    {
       rules = new boolean[8];
-      thisGen = " * ";
+      resetFirstGen();
       extremeBit = " ";
       setDisplayWidth(MAX_DISPLAY_WIDTH);
       SetRule(new_rule);
    }
    
+   /**
+    * Overrides constructor with default value of 0.
+    */
    public Automaton()
    {
       this(0); //default as rule 0;
    }
    
+   /**
+    * Resets thisGen to be the initial seed.
+    */
    public void resetFirstGen()
-   {
-      
+   {  
+      thisGen = "*";
    }
    
+   /**
+    * Sets a rule as the input rule. If 
+    * @param new_rule
+    * @return
+    */
    public boolean SetRule(int new_rule)
    {
       if(new_rule > 255 || new_rule < 0)
       {
-         //does not pass sanitation check.
+         //does not pass sanitation check. defaults to rule 0
+         for (int i = 0; i < rules.length; i++)
+         {
+            rules[i] = false;
+         }
          return false;
       } 
       else //if within 8-bit
@@ -56,14 +71,15 @@ class Automaton
             new_rule = new_rule / 2; //divide by 2, rounded?
          }
       }
-      
-      for (int i = 0; i < rules.length; i++)
-      {
-         System.out.println(rules[i]);
-      }
+
       return true;
    }
    
+   /**
+    * Public mutator for displayWidth
+    * @param width
+    * @return
+    */
    public boolean setDisplayWidth(int width)
    {
       if (width > MAX_DISPLAY_WIDTH)
@@ -74,17 +90,39 @@ class Automaton
       return true;
    }
    
+   /**
+    * Prints out the current gen and centers it if it is less than
+    * the displayWidth. If it is greater than display width it simply centers
+    * and truncates the rest of the image.
+    * @return
+    */
    public String toStringCurrentGen()
    {
+      
       int blanks = (displayWidth - thisGen.length())/2;
       String buffer = "";
-      for (int i = 0; i < blanks; i++)
+      String newString = thisGen;
+      
+      if (blanks > 0)
       {
-         buffer = buffer + ' ';
+         for (int i = 0; i < blanks; i++)
+         {
+            buffer = buffer + extremeBit;
+         }
+         
+         newString = buffer + thisGen + buffer;
       }
-      return buffer + thisGen + buffer;
+      else if (blanks < 0)
+      {
+         newString = newString.substring(-blanks, thisGen.length()+blanks);
+      } //else newString = thisGen;
+      return newString;
    }
    
+   /**
+    * Primary class used to propagate a newGen based on the above
+    * data.
+    */
    public void propagateNewGeneration()
    {  
       String newGen = "";
@@ -111,8 +149,13 @@ class Automaton
          } else { newGen = newGen + ' '; }
          
       }
-      
+
+      //Modify extremeBit to adjust for the end
+      if (extremeBit == " " && rules[0] ) { extremeBit = "*"; };
+      if (extremeBit == "*" && !rules[7] ) { extremeBit = " "; };
+
       thisGen = newGen;
       //
    }
+
 }
