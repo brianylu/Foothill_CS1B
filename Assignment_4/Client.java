@@ -1,13 +1,11 @@
 
 public class Client {
-
    private static final int MIN_name_length = 3;
    private static final int MAX_name_length = 60;
    private static final long MIN_incomeThisYear = 0;
    private static final long MAX_incomeThisYear = 1000000000;
    private static final double MIN_percentCut = 0; 
    private static final double MAX_percentCut = 99.99;
-   
    
    private String name; //The name of the Client.
    private long incomeThisYear; //how much the Client made so far this year.

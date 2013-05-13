@@ -8,5 +8,13 @@ public class Foothill {
       System.out.println("----- Client 1 -----\n" + c1 + "\n");
       System.out.println("----- Client 2 -----\n" + c2 + "\n");
       System.out.println("----- Writer 1 -----\n" + w1 + "\n");
+      
+      Client[] clients = new Client[4];
+      clients[0] = c1;
+      clients[1] = c2;
+      Agent agent = new Agent("Agent X", clients, 2);
+      
+      System.out.println("Long Form = " + agent.toStringClientsLong());
+      System.out.println("Short Form = " + agent.toStringClientsShort());
    }
 }

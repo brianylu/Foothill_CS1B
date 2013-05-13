@@ -1,11 +1,13 @@
 
 public class Agent {
    private String name; //the Agent's name. (private)
-   private Client[] myClients; //an array of Client references.  Don't instantiate individual Clients ... we allow this array to point to the caller's Client objects. (private)
+   private Client[] myClients; //an array of Client references.  
+   //Don't instantiate individual Clients ... we allow this array to point to the caller's Client objects. (private)
    private int numClients; //the current number of Clients this Agent has. (private)
    private static final int MAX_CLIENTS = 10;
    private static final int MIN_NAME_LEN = 2;
    private static final int MAX_NAME_LEN = 20; 
+   
    
    public Agent()
    {
@@ -15,12 +17,12 @@ public class Agent {
    public Agent(String name, Client[] clients, int numClients)
    {
       setName(name);
-      setClients(clients);
+      setClients(clients, numClients);
    }
    
    public boolean setName(String name)
    {
-      if (!checkName(name))
+      if (!isName(name))
       {
          this.name = "Default Agent";
          return false;
@@ -30,9 +32,9 @@ public class Agent {
       return true;
    }
    
-   public boolean setClients(Client[] clients)
+   public boolean setClients(Client[] clients, int numClients)
    {
-      for (int i = 0; i < clients.length; i++)
+      for (int i = 0; i < numClients; i++)
       {
          myClients[i] = clients[i];
       }
@@ -44,10 +46,22 @@ public class Agent {
     * @param name
     * @return
     */
-   protected boolean checkName(String name)
+   protected boolean isName(String name)
    {
       return name.length() >= MIN_NAME_LEN && name.length() <= MAX_NAME_LEN;
    }
+   
+   protected boolean isClientList(Client[] clients, int numClients)
+   {
+      
+      return false;
+   }
+   
+   /**
+    * Mutator methods for the agent.
+    * @param client
+    * @return
+    */
    
    public boolean addClient(Client client)
    {
@@ -89,9 +103,11 @@ public class Agent {
       
       for (int i = 0; i < numClients; i++)
       {
+         System.out.println("Client = " + myClients[i].getName() );
          clientNames = clientNames + myClients[i].getName() + "\n";
       }
-      return "";
+      
+      return clientNames;
    }
    
    public String toStringClientsLong()
@@ -100,9 +116,10 @@ public class Agent {
       
       for (int i = 0; i < numClients; i++)
       {
-         clientNames = clientNames + myClients[i].getName() + "\n";
+         clientNames = clientNames + myClients[i] + "\n";
       }
-      return "";
+      
+      return clientNames;
    }
    
    /*
